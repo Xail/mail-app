@@ -1,0 +1,9 @@
+<ul class="list-group">
+    <li class="list-group-item disabled" ng-if="selectedMailbox.letters.length == 0">Писем нет</li>
+    <li class="list-group-item" ng-repeat="letter in selectedMailbox.letters" ng-click="selectLetter(letter)"
+        ng-class="{active:selectedLetter == letter}">
+        <h5 list-group-item-heading>{{letter.subject}}</h5>
+        <p class="list-group-item-text" style="text-overflow:ellipsis;overflow:hidden;white-space: nowrap; width:90%">
+            {{letter.body}}</p>
+    </li>
+</ul>
