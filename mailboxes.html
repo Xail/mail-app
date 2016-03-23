@@ -1,0 +1,17 @@
+<div class="row" ng-click="$ctrl.fetchMailboxes()">
+
+    <div class="col-sm-4 col-md-4 col-lg-4">
+        <h3>Ящики {{$ctrl.mailboxes.length}}</h3>
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="mailbox in $ctrl.mailboxes"
+                ng-click="$ctrl.selectMailbox(mailbox)"
+                ng-class="{active: $ctrl.selectedMailbox.id == mailbox.id}">
+                <span class="badge">{{mailbox.letters.length}}</span>{{mailbox.name}}
+            </li>
+        </ul>
+    </div>
+    <div class="col-sm-8 col-md-8 col-lg-8">
+        <letters mailbox="$ctrl.selectedMailbox" letter="$ctrl.selectedLetter"></letters>
+    </div>
+
+</div>

@@ -1,95 +1,59 @@
 angular.module('emailApp', [])
-    .directive('email', function () {
-        return {
-            restrict: 'E',
-            templateUrl: 'email.html',
-            scope: true,
-            link: function (scope) {
-                scope.activeEmail = '';
-                scope.activeLetter = {};
-                scope.mailboxes = [{
-                    id: 1,
-                    name: "Работа",
-                    letters: [{
+    .component('mailboxes', {
+        templateUrl: 'mailboxes.html',
+        controller: function (MailboxService, LetterService) {
+            var ctrl = this;
+            this.activeEmail = '';
+            this.activeLetter = {};
+            this.mailboxes = [];
+            MailboxService.getAll().then(function (response) {
+                ctrl.mailboxes = response.data;
+            });
+            this.selectMailbox = function (mailbox) {
+                this.selectedMailbox = mailbox;
 
-                        recipient: 'recipient1@email.email',
-                        sender: 'sender1@email.email',
-                        subject: 'SQL Server T-SQL Tuning -TVF and Scalar Functions',
-                        body: 'A UDF is very convenient for centralising business logic as we can specify a set of business logic in one UDF which references multiple stored procedures and ad-hoc queries. However, they can lead to significant performance degradation due to their demands on the CPU'
-                    }, {
+                LetterService.getLetters(this.selectedMailbox)
+                    .then(function (response) {
+                        ctrl.selectedMailbox.letters = response.data;
+                        if (!ctrl.selectedMailbox.letters) {
+                            ctrl.selectedMailbox.letters = [];
+                        }
+                        if (ctrl.selectedMailbox.letters.length > 0) {
+                            ctrl.selectedLetter = mailbox.letters[0];
+                        } else {
+                            ctrl.selectedLetter = null;
+                        }
+                    });
+            };
 
-                        recipient: 'recipient1@email.email',
-                        sender: 'sender1@email.email',
-                        subject: 'Logical Query Processing: The FROM Clause and APPLY',
-                        body: 'This article is the third in a series that covers logical query processing. In the first part, I provided an overview of the topic, and in the second part I started covering the FROM clause, focusing on joins. This third part continues the coverage of the FROM clause, focusing on the APPLY operator.'
-                    }]
-                }, {
-                    id: 2,
-                    name: "Дом",
-                    letters: [{
-
-                        recipient: 'recipient2@email.email',
-                        sender: 'sender1@email.email',
-                        subject: 'Серовский тракт весь вечер простоял в пробках из-за множества аварий',
-                        body: 'На Серовском тракте минувшим вечером сохранялась сложная дорожная обстановка: днём там столкнулись в общей сложности 20 машин, а когда стемнело, ситуация ещё больше усложнилась.\
-Так, сразу несколько аварий, из-за которых возникли гигантские пробки, произошло в районе семи часов вечера. Видеозапись их последствий прислал в редакцию Е1.RU читатель Сергей.\
-- Большая пробка началась за несколько километров до того момента, как начинается видео, - рассказал он. – А закончилась недалеко от поворота на Таватуй. Там я увидел ДТП - кажется, «Девятка» врезалась в ГАЗель. Но это было лёгкое, грубо говоря, ДТП. Они встали посреди дороги, и машины их объезжали, поэтому возникла пробка.\
-Оказалось, что впереди – ещё один затор.\
-- Я так понял, авария произошла из-за этого – машины резко тормозили, потому что впереди уже была пробка, - поделился Сергей. - Мы медленно плелись, а там впереди – ещё одно ДТП. К сожалению, уже не помню, какие машины были, но они тоже чуть-чуть друг друга задели, и по краям дороги их объезжали другие.\
-Вскоре движение и вовсе практически остановилось.\
-- Двигались крайне медленно. Перемещались буквально по метру. Уже устали, подключились к интернету, стали смотреть на «Яндекс.пробках», что происходит… На видео заснята ситуация, когда уже три машины погружены на эвакуаторы, это основное ДТП, которое вызвало эту большую пробку, - сообщил Сергей. – Когда мы наконец его проехали, начался ряд горок. Там уже просто впереди едущие машины начали включать аварийки, предупреждая: впереди три машины в кювет улетели. И их пока никто не грузил. Были очень плохие погодные условия, и люди просто уходили в заносы, улетали в кюветы, а другие в них врезались.'
-                    }, {
-
-                        recipient: 'recipient2@email.email',
-                        sender: 'sender1@email.email',
-                        subject: 'SpaceX запустила ракету Falcon 9. Посадка на платформу опять не удалась',
-                        body: 'Сегодня ночью ракета-носитель Falcon 9 компании SpaceX успешно вывела на геостационарную орбиту спутник связи SES-9, запуск которого откладывался четыре раза из-за неудачного приземления предыдущей ракеты, проблем с погодой и технических неполадок. На этот раз всё прошло нормально. Ракета стартовала с площадки SLC-40 на мысе Канаверал 5 марта в 2:35 по московскому времени.\
-Видеотрансляция шла на сайте SpaceX. Запись прямого эфира см. здесь.'
-                    }, {
-
-                        recipient: 'recipient2@email.email',
-                        sender: 'sender1@email.email',
-                        subject: 'Астрономы обнаружили повторяющиеся быстрые радиоимпульсы – возможно, от разных типов источников',
-                        body: 'Пол Шольц [Paul Scholz] из института Макса Планка с коллегами-радиоастрономами при изучении одного из быстрых радиоимпульсов (БР) обнаружили повторяемость импульсов, исходивших из одного конкретного источника. Это открытие разом отбросило несколько теорий возникновения БР, добавив при этом ещё больше загадок учёным.\r \
-Быстрые радиоимпульсы, одиночные импульсы длиной в несколько миллисекунд, радиоастрономы впервые засекли в 2007. Группа профессора Дункана Лоримера, в поисках сигналов пульсаров проводила обработку результатов наблюдений шестилетней давности австралийского 64-метрового радиотелескопа Паркс.\r \
-\
-Сигнал был единичным, мощным, но очень коротким. Его проверка заняла около пяти лет. С тех пор было зарегистрировано несколько таких сигналов, и теперь учёные убеждены, что их нельзя списать на помехи, сбои в работе оборудования или микроволновки, в которых персонал готовит еду. С очень большой долей вероятности сигналы исходят из глубокого космоса.\
-\
-Объяснений природе происхождения было предложено несколько: слияние нейтронных звёзд, последний вздох испарившейся благодаря излучению Хокинга чёрной дыры, превращение блицара в чёрную дыру, и т.п. Но все эти объяснения были придуманы до того момента, как учёные обнаружили, что эти сигналы бывают периодическими.'
-                    }]
-                }, {
-                    id: 3,
-                    name: "Разное",
-                    letters: []
-                }]
-
-
-                scope.selectMailbox = function (mailbox) {
-                    scope.selectedMailbox = mailbox;
-                    if (mailbox.letters.length) {
-                        scope.selectedLetter = mailbox.letters[0];
-                    } else {
-                        scope.selectedLetter = null;
-                    }
-
-                };
-
-                scope.selectLetter = function (letter) {
-                    scope.selectedLetter = letter;
-                };
-
-            }
-        };
-    })
-    .directive('letters', function () {
-        return {
-            restrict: 'E',
-            templateUrl: 'letters.html',
-        };
-    })
-    .directive('preview', function () {
-        return {
-            restrict: 'E',
-            templateUrl: 'preview.html'
         }
+    })
+    .component('letters', {
+        bindings: {
+            mailbox: '<',
+            letter: '='
+        },
+        templateUrl: 'letters.html',
+        controller: function () {
+            var ctrl = this;
+            this.selectLetter = function (letter) {
+                ctrl.letter = letter;
+            };
+        }
+    })
+    .component('preview', {
+        templateUrl: 'preview.html',
+        bindings: {
+            letter: '<'
+        }
+    })
+    .service('MailboxService', function ($http) {
+        this.getAll = function () {
+            return $http.get('https://vivid-inferno-9244.firebaseIO.com/.json');
+        };
+    })
+    .service('LetterService', function ($http) {
+        this.getLetters = function (mailbox) {
+            return $http.get('https://vivid-inferno-9244.firebaseIO.com/' + (mailbox.id - 1) + '/letters/.json');
+        };
     });

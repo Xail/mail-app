@@ -1,9 +1,17 @@
-<ul class="list-group">
-    <li class="list-group-item disabled" ng-if="selectedMailbox.letters.length == 0">Писем нет</li>
-    <li class="list-group-item" ng-repeat="letter in selectedMailbox.letters" ng-click="selectLetter(letter)"
-        ng-class="{active:selectedLetter == letter}">
-        <h5 list-group-item-heading>{{letter.subject}}</h5>
-        <p class="list-group-item-text" style="text-overflow:ellipsis;overflow:hidden;white-space: nowrap; width:90%">
-            {{letter.body}}</p>
-    </li>
-</ul>
+<div class="row">
+    <div class="col-lg-6 col-md-6">
+        <h3>{{$ctrl.mailbox.name}}</h3>
+        <ul class="list-group">
+            <li class="list-group-item disabled" ng-if="$ctrl.mailbox.letters.length == 0">Писем нет</li>
+            <li class="list-group-item" ng-repeat="letter in $ctrl.mailbox.letters" ng-click="$ctrl.selectLetter(letter)" ng-class="{active:$ctrl.letter == letter}">
+                <h5 list-group-item-heading>{{letter.subject}}</h5>
+
+                <p class="list-group-item-text" style="text-overflow:ellipsis;overflow:hidden;white-space: nowrap; width=90%"><span class="label label-default">{{letter.sender}}</span> {{letter.body}}</p>
+            </li>
+
+        </ul>
+    </div>
+    <div class="col-lg-6 col-md-6">
+        <preview letter="$ctrl.letter" ng-if="$ctrl.letter"></preview>
+    </div>
+</div>
