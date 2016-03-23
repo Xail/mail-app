@@ -1,18 +1,23 @@
-angular.module('emailApp', [])
+angular.module('emailApp', ['ui.bootstrap'])
     .component('mailboxes', {
         templateUrl: 'mailboxes.html',
         controller: function (MailboxService, LetterService) {
             var ctrl = this;
-            this.activeEmail = '';
-            this.activeLetter = {};
-            this.mailboxes = [];
+            ctrl.activeEmail = '';
+            ctrl.activeLetter = {};
+            ctrl.mailboxes = [];
+
             MailboxService.getAll().then(function (response) {
                 ctrl.mailboxes = response.data;
-            });
-            this.selectMailbox = function (mailbox) {
-                this.selectedMailbox = mailbox;
 
-                LetterService.getLetters(this.selectedMailbox)
+                if (!ctrl.activeEmail) {
+                    ctrl.selectMailbox(ctrl.mailboxes[0]);
+                }
+            });
+            ctrl.selectMailbox = function (mailbox) {
+                ctrl.selectedMailbox = mailbox;
+
+                LetterService.getLetters(ctrl.selectedMailbox)
                     .then(function (response) {
                         ctrl.selectedMailbox.letters = response.data;
                         if (!ctrl.selectedMailbox.letters) {
@@ -25,7 +30,6 @@ angular.module('emailApp', [])
                         }
                     });
             };
-
         }
     })
     .component('letters', {
@@ -36,7 +40,7 @@ angular.module('emailApp', [])
         templateUrl: 'letters.html',
         controller: function () {
             var ctrl = this;
-            this.selectLetter = function (letter) {
+            ctrl.selectLetter = function (letter) {
                 ctrl.letter = letter;
             };
         }

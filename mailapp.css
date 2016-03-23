@@ -1,0 +1,13 @@
+.letter {
+    padding: 2px;
+    margin: 2px;
+    border-bottom: rgba(39, 39, 39, 0.67);
+    text-overflow: clip;
+    overflow: hidden;
+    white-space: nowrap;
+    border-bottom: 1px silver solid;
+}
+
+.letter.selected {
+    background-color: rgba(108, 164, 19, 0.67);
+}
