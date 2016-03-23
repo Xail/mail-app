@@ -1,0 +1,11 @@
+<div class="media">
+    <div class="media-left">
+        <a href="#">
+            <img class="media-object" ng-src="{{$ctrl.user.avatarUrl}}" alt="{{$ctrl.user.fullName}}">
+        </a>
+    </div>
+    <div class="media-body">
+        <h4 class="media-heading">{{$ctrl.user.fullName}}</h4>
+        {{$ctrl.age($ctrl.birthDate)}} лет
+    </div>
+</div>

@@ -1,13 +1,19 @@
 .letter {
-    padding: 2px;
+    padding: 2px 2px 2px 16px;
     margin: 2px;
     border-bottom: rgba(39, 39, 39, 0.67);
     text-overflow: clip;
     overflow: hidden;
     white-space: nowrap;
     border-bottom: 1px silver solid;
+    position: relative;
 }
 
-.letter.selected {
-    background-color: rgba(108, 164, 19, 0.67);
+.mark {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 8px;
+    height: 100%;
+    background-color: rgba(22, 143, 255, 0.95);
 }

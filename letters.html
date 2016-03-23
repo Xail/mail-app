@@ -2,27 +2,23 @@
     <div class="col-lg-6 col-md-6">
         <div class="panel panel-default">
             <div class="panel-body">
-                <div class="list-group">
-                    <p class="disabled" ng-if="$ctrl.mailbox.letters.length == 0">Писем нет</p>
-                    <p class="letter"
-                       ng-repeat="letter in $ctrl.mailbox.letters"
-                       ng-click="$ctrl.selectLetter(letter)" ng-class="{'selected':$ctrl.letter == letter}">
-                        <span class="label label-default">{{letter.sender}}</span><br>
-                        <strong>{{letter.subject}}</strong><br>
-                        <span class="text-muted">{{letter.body}}</span>
-
-                    </p>
-
+                <div class="disabled" ng-if="$ctrl.mailbox.letters.length == 0">Писем нет</div>
+                <div class="letter"
+                     ng-repeat="letter in $ctrl.mailbox.letters"
+                     ng-click="$ctrl.selectLetter(letter)">
+                    <div class="mark" ng-if="$ctrl.letter == letter"></div>
+                    <span class="label label-default">{{letter.sender}}</span><br>
+                    <strong>{{letter.subject}}</strong><br>
+                    <span class="text-muted">{{letter.body}}</span>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-6 col-md-6" ng-if="$ctrl.letter">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <preview letter="$ctrl.letter"></preview>
+        <div class="col-lg-6 col-md-6" ng-if="$ctrl.letter">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <preview letter="$ctrl.letter"></preview>
+                </div>
             </div>
         </div>
-
     </div>
 </div>

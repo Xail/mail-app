@@ -53,11 +53,11 @@ angular.module('mailboxes', ['ui.bootstrap'])
     })
     .service('MailboxService', function ($http) {
         this.getAll = function () {
-            return $http.get('https://vivid-inferno-9244.firebaseIO.com/.json');
+            return $http.get('https://vivid-inferno-9244.firebaseIO.com/letters.json');
         };
     })
     .service('LetterService', function ($http) {
         this.getLetters = function (mailbox) {
-            return $http.get('https://vivid-inferno-9244.firebaseIO.com/' + (mailbox.id - 1) + '/letters/.json');
+            return $http.get('https://vivid-inferno-9244.firebaseIO.com/letters/' + (mailbox.id - 1) + '/letters/.json');
         };
     });
