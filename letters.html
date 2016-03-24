@@ -7,7 +7,9 @@
                      ng-repeat="letter in $ctrl.mailbox.letters"
                      ng-click="$ctrl.selectLetter(letter)">
                     <div class="mark" ng-if="$ctrl.letter == letter"></div>
-                    <span class="label label-default">{{letter.sender}}</span><br>
+                    <span class="label label-default">{{letter.sender}}</span>
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                    <span class="label label-default">{{letter.recipient}}</span><br>
                     <strong>{{letter.subject}}</strong><br>
                     <span class="text-muted">{{letter.body}}</span>
                 </div>

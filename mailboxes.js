@@ -19,12 +19,18 @@ angular.module('mailboxes', ['ui.bootstrap'])
 
                 LetterService.getLetters(ctrl.selectedMailbox)
                     .then(function (response) {
-                        ctrl.selectedMailbox.letters = response.data;
+                        ctrl.selectedMailbox.letters = [];
+                        Object.keys(response.data).forEach(function (key) {
+                            var letter = response.data[key];
+                            letter.id = key;
+                            ctrl.selectedMailbox.letters.push(letter);
+                        });
+                        console.log(ctrl.selectMailbox.letters);
                         if (!ctrl.selectedMailbox.letters) {
                             ctrl.selectedMailbox.letters = [];
                         }
                         if (ctrl.selectedMailbox.letters.length > 0) {
-                            ctrl.selectedLetter = mailbox.letters[0];
+                            ctrl.selectedLetter = mailbox.letters[0]
                         } else {
                             ctrl.selectedLetter = null;
                         }
