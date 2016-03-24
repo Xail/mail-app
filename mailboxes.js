@@ -60,6 +60,11 @@ angular.module('mailboxes', ['ui.bootstrap'])
                 LetterService.sendMessage(ctrl.mailbox, ctrl.newLetter).then(function (response) {
                     ctrl.selectMailbox({mailbox: ctrl.mailbox});
                 })
+            };
+            ctrl.deleteLetter = function (letter) {
+                LetterService.deleteMessage(ctrl.mailbox, letter).then(function (response) {
+                    ctrl.selectMailbox({mailbox: ctrl.mailbox});
+                })
             }
         }
     })
@@ -86,5 +91,9 @@ angular.module('mailboxes', ['ui.bootstrap'])
 
         this.editMessage = function (mailbox, message) {
             return $http.post('https://vivid-inferno-9244.firebaseIO.com/letters/' + (mailbox.id - 1) + '/letters/' + message.id + '.json', message);
+        };
+
+        this.deleteMessage = function (mailbox, message) {
+            return $http.delete('https://vivid-inferno-9244.firebaseIO.com/letters/' + (mailbox.id - 1) + '/letters/' + message.id + '.json');
         };
     });
