@@ -55,9 +55,18 @@ angular.module('mailboxes', ['ui.bootstrap'])
         this.getAll = function () {
             return $http.get('https://vivid-inferno-9244.firebaseIO.com/letters.json');
         };
+
     })
     .service('LetterService', function ($http) {
         this.getLetters = function (mailbox) {
             return $http.get('https://vivid-inferno-9244.firebaseIO.com/letters/' + (mailbox.id - 1) + '/letters/.json');
+        };
+
+        this.addMessage = function (mailbox, message) {
+            return $http.post('https://vivid-inferno-9244.firebaseIO.com/letters/' + (mailbox.id - 1) + '/letters/.json', message);
+        };
+
+        this.editMessage = function (mailbox, message) {
+            return $http.post('https://vivid-inferno-9244.firebaseIO.com/letters/' + (mailbox.id - 1) + '/letters/' + message.id + '.json', message);
         };
     });
