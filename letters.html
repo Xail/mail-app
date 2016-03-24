@@ -1,12 +1,11 @@
 <div class="row">
     <div class="col-lg-12 col-sm-12">
         <h3>Новое письмо</h3>
-        <form class="form">
-            <
+        <div class="form">
             <input type="text" class="form-control" ng-model="$ctrl.newLetter.recipient" placeholder="Получатель">
             <input type="text" class="form-control" ng-model="$ctrl.newLetter.subject" placeholder="Тема">
             <textarea class="form-control" ng-model="$ctrl.newLetter.body" placeholder="Текст"></textarea>
-        </form>
+        </div>
         <button type="button" class="pull-right btn btn-primary" ng-click="$ctrl.sendLetter()">
             Сохранить письмо
         </button>
