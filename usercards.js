@@ -23,6 +23,10 @@ angular.module('usercards', [])
                 console.log(birthday);
                 var now = new Date();
                 return now.getFullYear() - birthday.getFullYear();
+            };
+            ctrl.birthday = function (birthdate) {
+                var parts = birthdate.split('-');
+                return new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
             }
         }
     })

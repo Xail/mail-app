@@ -1,11 +1,28 @@
-<div class="media">
-    <div class="media-left">
-        <a href="#">
-            <img class="media-object" ng-src="{{$ctrl.user.avatarUrl}}" alt="{{$ctrl.user.fullName}}">
-        </a>
-    </div>
-    <div class="media-body">
-        <h4 class="media-heading">{{$ctrl.user.fullName}}</h4>
-        {{$ctrl.age($ctrl.birthDate)}} лет
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="media">
+            <div class="media-left">
+                <a href="#">
+                    <img class="media-object" ng-src="{{$ctrl.user.avatarUrl}}" alt="{{$ctrl.user.fullName}}"
+                         style="border-radius: 50%;">
+                </a>
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading">{{$ctrl.user.fullName}}</h4>
+
+                <p>
+                    <span class="glyphicon glyphicon-envelope"></span> <a href="mailto:{{ $ctrl.user.email }}">{{$ctrl.user.email}}</a>
+                </p>
+
+                <p>
+                    <span class="glyphicon glyphicon-gift"></span>
+                    {{$ctrl.birthday($ctrl.user.birthdate) | date : 'dd.MM.yyyy'}}
+                </p>
+
+                <p>
+                    <span class="glyphicon glyphicon-globe"></span> {{$ctrl.user.address}}</span>
+                </p>
+            </div>
+        </div>
     </div>
 </div>
