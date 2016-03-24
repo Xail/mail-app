@@ -35,14 +35,26 @@ angular.module('mailboxes', ['ui.bootstrap'])
     .component('letters', {
         bindings: {
             mailbox: '<',
-            letter: '='
+            letter: '=',
+            selectMailbox: '&'
         },
         templateUrl: 'letters.html',
-        controller: function () {
+        controller: function (LetterService) {
             var ctrl = this;
+            ctrl.newLetter = {
+                subject: 'Новое письмо',
+                body: 'Здравствуйте',
+                recipient: '',
+                sender: 'my@email'
+            };
             ctrl.selectLetter = function (letter) {
                 ctrl.letter = letter;
             };
+            ctrl.sendLetter = function () {
+                LetterService.sendMessage(ctrl.mailbox, ctrl.newLetter).then(function (response) {
+                    ctrl.selectMailbox({mailbox: ctrl.mailbox});
+                })
+            }
         }
     })
     .component('preview', {
@@ -62,7 +74,7 @@ angular.module('mailboxes', ['ui.bootstrap'])
             return $http.get('https://vivid-inferno-9244.firebaseIO.com/letters/' + (mailbox.id - 1) + '/letters/.json');
         };
 
-        this.addMessage = function (mailbox, message) {
+        this.sendMessage = function (mailbox, message) {
             return $http.post('https://vivid-inferno-9244.firebaseIO.com/letters/' + (mailbox.id - 1) + '/letters/.json', message);
         };
 

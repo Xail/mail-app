@@ -20,16 +20,13 @@
                     </ul>
 
                 </div>
-                <button type="button" class="btn btn-primary">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                    Написать письмо
-                </button>
+
             </div>
         </div>
         <div class="row" ng-click="$ctrl.fetchMailboxes()">
             <div class="col-sm-12 col-md-12 col-lg-12">
                 <letters class="container-fluid" mailbox="$ctrl.selectedMailbox"
-                         letter="$ctrl.selectedLetter"></letters>
+                         letter="$ctrl.selectedLetter" select-mailbox="$ctrl.selectMailbox(mailbox)"></letters>
             </div>
         </div>
     </div>
